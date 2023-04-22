@@ -3,7 +3,7 @@ import { KeyboardEvent, useState } from 'react'
 import { IoArrowBack } from 'react-icons/io5'
 import { Peer } from 'peerjs'
 
-import { useAppSelector, usePageTitle, useSocketContext } from 'hooks'
+import { useAppContext, useAppSelector, usePageTitle, useSocketContext } from 'hooks'
 import { CallModal } from 'components'
 import { ChatLayout } from 'layouts'
 import { User } from 'types'
@@ -20,6 +20,7 @@ const Chat = () => {
   const { user } = useAppSelector(store => store.user)
   const { getUserMedia } = navigator.mediaDevices
   usePageTitle(`@${availablePeer?.username}`)
+  const {chatBackground} = useAppContext()
   const {socket} = useSocketContext()
 
   const peer = new Peer({host: ''})
@@ -88,7 +89,7 @@ const Chat = () => {
           />
         )}
         <div className='w-full h-full flex items-center'>
-          <div className='w-full h-full transition duration-500 ease-in-out'>
+          <div style={{background: `url('${(chatBackground)}')`}} className='w-full h-full transition duration-500 ease-in-out bg-cover bg-no-repeat'>
             <div className='w-full flex items-center justify-between p-4 bg-gray-300'>
               <div onClick={() => setOpenMenu(true)} className='flex items-center gap-2 cursor-pointer'>
                 <img src={availablePeer.avatar} alt={availablePeer.full_name} className='w-[30px] h-[30px] rounded-full object-cover' />

@@ -40,7 +40,6 @@ body {
 	background: '#fff';
 	font-family: var(--body-font);
 	overflow-x: hidden;
-	/* min-height: 100vh; */
 }
 
 input:-webkit-autofill {

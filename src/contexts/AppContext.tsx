@@ -1,5 +1,7 @@
 import { ReactNode, createContext, useState } from 'react'
 
+import landscape from 'assets/images/landscape.jpg'
+
 interface Props {
     children: ReactNode
 }
@@ -9,7 +11,7 @@ export const AppContext = createContext<any | null>(null)
 AppContext.displayName = ''
 
 const AppProvider = ({children}:Props) => {
-    const [chatBackground, setChatBackground] = useState<ArrayBuffer | string | null>('https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')
+    const [chatBackground, setChatBackground] = useState<ArrayBuffer | string | null>(landscape)
     const [currentMode, setCurrentMode] = useState<string>('dark')
 
     const setMode = (mode: string) => {
