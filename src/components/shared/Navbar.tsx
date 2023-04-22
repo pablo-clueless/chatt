@@ -16,7 +16,7 @@ const Navbar = () => {
   })
 
   return (
-    <header className={`w-full px-10 py-4 flex items-center justify-between !z-10 top-0 left-0 border-b ${scrolled ? 'fixed' : 'static'}`}>
+    <header className={`w-full px-10 py-4 flex items-center justify-between !z-10 top-0 left-0 border-b ${scrolled ? 'fixed bg-white' : 'static bg-transparent'}`}>
       <Thumb />
       <div className='flex items-center gap-4'>
         <Button

@@ -18,7 +18,7 @@ const Home = () => {
         </div>
         <p className='text-sm font-semibold text-gray-300'>IMs, VoIP and Video calls</p>
       </div>
-      <div className='w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4 my-7'>
+      <div className='w-full flex flex-col md:flex-row items-start gap-4 my-7'>
         <div className='w-full flex flex-col'>
           <img src={chat} alt='messaging illustration' className='w-[250px]' />
         </div>
@@ -27,7 +27,7 @@ const Home = () => {
           <p className='text-lg'>Send and recieve instant messages Whether you're online or offline doesn't matter. What matters is that you'll always get notified of important messages.</p>
         </div>
       </div>
-      <div className='w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4 my-7'>
+      <div className='w-full flex flex-col-reverse md:flex-row items-start gap-4 my-7'>
         <div className='w-full flex flex-col'>
           <p className='text-2xl font-black'>VoIP Calls</p>
           <p className='text-lg'>Spend less on phone bills by making VoIP calls to any one with an Internet enabled phone. Chatt has got you covered like that.</p>
@@ -36,7 +36,7 @@ const Home = () => {
           <img src={call} alt='voip call illustration' className='w-[250px]' />
         </div>
       </div>
-      <div className='w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4 my-7'>
+      <div className='w-full flex flex-col md:flex-row items-start gap-4 my-7'>
         <div className='w-full flex flex-col'>
           <img src={video} alt='video call illustration' className='w-[250px]' />
         </div>
