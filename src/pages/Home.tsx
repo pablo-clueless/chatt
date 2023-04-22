@@ -42,7 +42,7 @@ const Home = () => {
         </div>
         <div className='w-full flex flex-col'>
           <p className='text-2xl font-black'>Video Chat</p>
-          <p className='text-lg'>Send and recieve instant messages Whether you're online or offline doesn't matter. What matters is that you'll always get notified of important messages.</p>
+          <p className='text-lg'>Make video calls with up to 500 users. Crisp video calls with low latency and works on 2G network. Say goodbye to quirky and delayed video call.</p>
         </div>
       </div>
     </main>
