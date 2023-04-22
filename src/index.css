@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #CCC;
+	border-radius: 40px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: 'Outfit', sans-serif;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: '#fff';
+	font-family: var(--body-font);
+	overflow-x: hidden;
+	/* min-height: 100vh; */
+}
+
+input:-webkit-autofill {
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+input[type='file']::-webkit-file-upload-button {
+	display: none;
+}
+
+button {
+	@apply active:scale-[0.98];
+}
+
+/* input:number reset */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+/* removes ms edge password reveal icon */
+::-ms-reveal {
+	display: none;
+}
