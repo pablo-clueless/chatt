@@ -1,4 +1,4 @@
-### Chatt
+# Chatt
 
 This is a project to test and enhance my skills in **WebSocket** and **WebRTC**.
 
