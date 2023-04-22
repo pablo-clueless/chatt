@@ -4,8 +4,7 @@ import { FiEdit, FiMoreVertical, FiSearch } from 'react-icons/fi'
 import Cookies from 'universal-cookie'
 import axios from 'axios'
 
-import { useAppContext } from 'hooks'
-import { Navbar } from 'components'
+import { ChatMenu, Navbar } from 'components'
 import { CONTACTS } from 'TEST'
 import { User } from 'types'
 
@@ -18,8 +17,8 @@ interface Props {
 const URL = import.meta.env.VITE_BASE_URL
 
 const ChatLayout = ({children, id, setPeer}:Props) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [peerId, setPeerId] = useState<string>('')
-  const { chatBackground } = useAppContext()
   const cookies = new Cookies()
 
   useQuery({
@@ -44,14 +43,23 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
 
   return (
     <>
+    {isMenuOpen && (
+      <ChatMenu
+        onClose={() => setIsMenuOpen(false)}
+      />
+    )}
     <Navbar />
     <div className='w-full h-[92vh] flex items-center'>
       <div className='w-0 md:w-[300px] h-full flex flex-col gap-2 px-2 bg-gray-100 border-r'>
         <div className='w-full flex items-center justify-between py-4'>
           <p></p>
           <div className='flex items-center gap-4'>
-            <FiEdit className='cursor-pointer' />
-            <FiMoreVertical className='cursor-pointer' />
+            <button className=''>
+              <FiEdit />
+            </button>
+            <button onClick={() => setIsMenuOpen(true)} className=''>
+              <FiMoreVertical />
+            </button>
           </div>
         </div>
         <div className='w-full h-[50px] flex items-center gap-3 bg-gray-300 px-2 py-2 rounded-sm'>
@@ -73,7 +81,7 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
           ))}
         </div>
       </div>
-      <div style={{background: chatBackground}} className='w-full flex-1 h-full bg-no-repeat bg-cover'>
+      <div className='w-full flex-1 h-full bg-no-repeat bg-cover'>
         {children}
       </div>
     </div>
