@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { ErrorFallback, ToastContainer } from 'components'
+import { ErrorFallback } from 'components'
 import Router from './Router'
 
 const App = () => {
@@ -8,7 +8,6 @@ const App = () => {
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onReset={() => typeof window !== undefined && window.location.reload()}>
-      <ToastContainer />
       <Router />
     </ErrorBoundary>
   )

@@ -6,11 +6,11 @@ export const NAV_LINKS = [
 ]
 
 export const FOOTER_LINKS = [
-    {title: 'company', links: [
-        {label: 'about', target: '/'},
-		{label: 'contact', target: '/'},
+    {title: 'overview', links: [
+        {label: 'about', target: '/about'},
+		{label: 'contact', target: '/contact'},
 		{label: 'careers', target: '/'},
-		{label: 'blog', target: '/' },
+		{label: 'developers', target: '/' },
     ]},
     {title: 'contact', links: [
 		{label: 'support', target: '/'},
