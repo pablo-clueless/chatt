@@ -18,7 +18,7 @@ const Waitlist = () => {
 
   const {isLoading, mutateAsync} = useMutation({
     mutationFn: (email:string) => {
-      return axios.post(`${URL}/users/join-waitlist`, {email})
+      return axios.post(`${URL}/chatt/v1/user/join-waitlist`, {email})
     },
     mutationKey: ['join waitlist'],
     onSuccess: ({data}) => {

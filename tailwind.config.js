@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       animation: {},
-      backgroundImage: {},
+      backgroundImage: {
+        'not-found': 'url("./src/assets/images/404.png")'
+      },
       colors: {
         green: {
           50: '#92D396',

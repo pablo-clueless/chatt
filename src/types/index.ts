@@ -14,3 +14,10 @@ export type Message = {
     sender: User
     senderId: string
 }
+
+export type Notification = {
+    id: string
+    notification: string
+    created_at: Date | string
+    is_read: boolean
+}
