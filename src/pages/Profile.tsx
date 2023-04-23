@@ -10,7 +10,7 @@ const Profile = () => {
   useQuery({
     enabled: false,
     queryFn: () => {
-      return axios.get(`${URL}/auth/profile`, {
+      return axios.get(`${URL}/chatt/v1/auth/profile`, {
         headers: { 'Authorization': `Bearer ${cookies.get('access_token')}` }
       })
     },

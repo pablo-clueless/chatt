@@ -10,9 +10,11 @@ import {
   NotFound,
   Profile,
   ResetPassword,
+  Settings,
   Signin,
   Signup,
-  Verify
+  Verify,
+  Waitlist
 } from 'pages'
 
 const Router = () => {
@@ -27,9 +29,12 @@ const Router = () => {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/verify' element={<Verify />} />
-        <Route path='/chat' element={<Chat />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/auth' element={<Auth />}></Route>
+        <Route path='/join-waitlist' element={<Waitlist />} />
+        <Route element={<Auth />}>
+          <Route path='/chat' element={<Chat />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/settings' element={<Settings />} />
+        </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>

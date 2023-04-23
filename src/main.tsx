@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import React from 'react'
 
-import { AppProvider, SocketProvider } from 'contexts'
+import { AppProvider } from 'contexts'
 import { store } from 'store/store'
 import App from './App.tsx'
 import './index.css'
@@ -20,9 +20,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <GoogleOAuthProvider clientId={clientId}>
           <Provider store={store}>
             <AppProvider>
-              <SocketProvider>
-                <App />
-              </SocketProvider>
+              <App />
             </AppProvider>
           </Provider>
         </GoogleOAuthProvider>

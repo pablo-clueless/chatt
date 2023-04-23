@@ -19,9 +19,9 @@ const notification = createSlice({
         },
         remove: (state, action) => {
             const id = action.payload
-            const notification = state.notifications.find(notification => notification._id === id)
+            const notification = state.notifications.find(notification => notification.id === id)
             if(notification) {
-                state.notifications = state.notifications.filter(notification => notification._id !== id)
+                state.notifications = state.notifications.filter(notification => notification.id !== id)
             }
         },
     }

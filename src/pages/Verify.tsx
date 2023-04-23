@@ -16,7 +16,7 @@ const Verify = () => {
   const {isLoading} = useQuery({
     enabled: !!token,
     queryFn: () => {
-      return axios.post(`${URL}/verify-email/${token}`)
+      return axios.post(`${URL}/chatt/v1/verify/${token}`)
     },
     queryKey: ['verify email'],
     onSuccess: ({data}) => {

@@ -8,7 +8,7 @@ interface Props {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AppContext = createContext<any | null>(null)
-AppContext.displayName = ''
+AppContext.displayName = 'Chatt'
 
 const AppProvider = ({children}:Props) => {
     const [chatBackground, setChatBackground] = useState<ArrayBuffer | string | null>(landscape)

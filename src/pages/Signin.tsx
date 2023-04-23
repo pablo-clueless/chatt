@@ -3,40 +3,45 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { FcGoogle } from 'react-icons/fc'
 import axios, { AxiosError } from 'axios'
+import Cookies from 'universal-cookie'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { Button, InputField, Spinner, Thumb } from 'components'
-import { usePageTitle } from 'hooks'
+import { useAppDispatch, usePageTitle } from 'hooks'
+import { login } from 'store/slices/user'
 
 const initialValues = {email: '', password: ''}
 const URL = import.meta.env.VITE_BASE_URL
 
 interface Payload {
-  provider: 'auth' | 'google' | 'github'
-  payload: {
-    email?: string
-    password?: string
-    token?: string
-  }
+  email: string
+  password: string
 }
 
 const Signin = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const cookies = new Cookies()
   usePageTitle('Sign In')
 
   const schema = Yup.object({
     email: Yup.string().email('Please enter a valid email!').required('Email is required!'),
-    password: Yup.string().matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/).required('Password is required!')
+    password: Yup.string().
+    matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/, 'Password must contain at least one uppercase, lowercase, number and special character!').
+    required('Password is required!'),
   })
 
   const {isLoading, mutateAsync} = useMutation({
-    mutationFn: ({provider, payload}:Payload) => {
-      return axios.post(`${URL}/auth/signin/${provider}`, payload)
+    mutationFn: (payload:Payload) => {
+      return axios.post(`${URL}/chatt/v1/auth/signin`, payload)
     },
-    mutationKey: ['sigin auth google'],
+    mutationKey: ['signin auth'],
     onSuccess: ({data}) => {
-      console.log(data)
+      const {data:{safeuser, token}, message} = data
+      dispatch(login(safeuser))
+      cookies.set('access_token', token)
+      console.log(message)
       navigate('/chat')
     },
     onError: (error:AxiosError) => {
@@ -45,11 +50,29 @@ const Signin = () => {
     }
   })
 
-  const {errors, handleBlur, handleChange, handleSubmit} = useFormik({
+  const googleMutation = useMutation({
+    mutationFn: (code:string) => {
+      return axios.post(`${URL}/chatt/v1/auth/google`, code)
+    },
+    mutationKey: ['signin auth'],
+    onSuccess: ({data}) => {
+      const {data:{safeuser, token}, message} = data
+      dispatch(login(safeuser))
+      cookies.set('', token)
+      console.log(message)
+      navigate('/chat')
+    },
+    onError: (error:AxiosError) => {
+      const {message} = error
+      console.log(message)
+    }
+  })
+
+  const {errors, handleChange, handleSubmit} = useFormik({
     initialValues,
     validationSchema: schema,
     onSubmit: async(data) => {
-      mutateAsync({provider: 'auth', payload: data})
+      mutateAsync(data)
     }
   })
 
@@ -57,7 +80,7 @@ const Signin = () => {
     flow: 'auth-code',
     onSuccess: async(response) => {
       const {code} = response
-      mutateAsync({provider: 'google', payload: {token: code}})
+      googleMutation.mutateAsync(code)
     },
     onError: (error) => console.log(error)
   })
@@ -74,7 +97,6 @@ const Signin = () => {
             type='email'
             label='Email'
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='someone@example.com'
             error={errors.email}
           />
@@ -83,7 +105,6 @@ const Signin = () => {
             type='password'
             label='Password'
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='********'
             error={errors.password}
           />
@@ -98,7 +119,7 @@ const Signin = () => {
       </div>
       <div className='flex flex-col items-center mt-20'>
         <Button
-          label={<FcGoogle className='text-2xl' />}
+          label={googleMutation.isLoading ? <Spinner size='small' weight='thin' /> : <FcGoogle className='text-2xl' />}
           onClick={() => googleLogin()}
           className='w-[338px] h-[46px] border border-gray-700'
         />
