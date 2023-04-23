@@ -7,7 +7,6 @@ import { useScrollLock } from './scroll-lock'
 import { usePagination } from './pagination'
 import { usePageTitle } from './page-title'
 import { useDraggable } from './drag-hook'
-import { useToast } from './toast-hook'
 
 export {
     useAppContext,
@@ -20,5 +19,4 @@ export {
     usePageTitle,
     usePagination,
     useScrollLock,
-    useToast,
 }

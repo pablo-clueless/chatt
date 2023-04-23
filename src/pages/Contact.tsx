@@ -7,25 +7,33 @@ import * as Yup from 'yup'
 import { Button, InputField, Spinner, Thumb } from 'components'
 import { usePageTitle } from 'hooks'
 
-const initialValues = {email: ''}
+interface Payload {
+  email: string
+  message: string
+  name: string
+}
+
+const initialValues:Payload = {email: '', message: '', name: ''}
 const URL = import.meta.env.VITE_BASE_URL
 
-const ForgotPassword = () => {
+const Contact = () => {
   const navigate = useNavigate()
-  usePageTitle('Forgot Password')
+  usePageTitle('Contact Us')
 
   const schema = Yup.object({
     email: Yup.string().email('Please enter a valid email!').required('Email is required!'),
+    message: Yup.string().required('Message is required!'),
+    name: Yup.string().required('Name is required!')
   })
 
   const {isLoading, mutateAsync} = useMutation({
-    mutationFn: (email: string) => {
-      return axios.post(`${URL}/chatt/v1/auth/forgot-password`, {email})
+    mutationFn: (payload:Payload) => {
+      return axios.post(`${URL}/chatt/v1/user/contact`, payload)
     },
-    mutationKey: ['signup auth google'],
+    mutationKey: ['contact support'],
     onSuccess: ({data}) => {
       console.log(data)
-      navigate('/verify')
+      navigate('/')
     },
     onError: (error:AxiosError) => {
       const {message} = error
@@ -37,18 +45,26 @@ const ForgotPassword = () => {
     initialValues,
     validationSchema: schema,
     onSubmit: async(data) => {
-        const {email} = data
-      mutateAsync(email)
+      mutateAsync(data)
     }
   })
-
+  
   return (
     <main className='w-full flex flex-col items-center pt-20'>
       <Thumb />
       <div className='flex flex-col items-center mt-10'>
-        <p className='text-2xl font-medium'>Forgot Password</p>
-        <p className='text-xs text-gray-700 font-bold mt-2'>Enter your email and we will send a link to reset your password!</p>
+        <p className='text-2xl font-medium'>Contact Us</p>
+        <p className='text-xs text-gray-700 font-bold mt-2'>Send us a message and a rep will get in touch with you.</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
+          <InputField
+            element='input'
+            name='name'
+            type='text'
+            label='Name'
+            onChange={handleChange}
+            placeholder='John Doe'
+            error={errors.name}
+          />
           <InputField
             element='input'
             name='email'
@@ -58,19 +74,25 @@ const ForgotPassword = () => {
             placeholder='someone@example.com'
             error={errors.email}
           />
+          <InputField
+            element='textarea'
+            name='message'
+            type='text'
+            label='Message'
+            onChange={handleChange}
+            placeholder='Your message'
+            error={errors.message}
+          />
           <Button
-            label={isLoading ? <Spinner size='small' weight='thin' /> : 'Proceed'}
+            label={isLoading ? <Spinner size='small' weight='thin' /> : 'proceed'}
             type='submit'
             className='w-full h-[46px] bg-gray-700 text-white'
           />
         </form>
-      </div>
-      <div className='flex items-center gap-40 mt-10'>
-        <Link to='/' className='text-sm font-medium ml-1'>&larr; Home</Link>
-        <Link to='/signin' className='text-sm font-medium ml-1'>Sign In &rarr;</Link>
+        <Link to='/' className='text-sm font-medium mt-5 underline ml-1'>&larr; Go Home</Link>
       </div>
     </main>
   )
 }
 
-export default ForgotPassword
+export default Contact

@@ -11,13 +11,13 @@ import { Button, InputField, Spinner, Thumb } from 'components'
 import { useAppDispatch, usePageTitle } from 'hooks'
 import { login } from 'store/slices/user'
 
-const initialValues = {email: '', password: ''}
-const URL = import.meta.env.VITE_BASE_URL
-
 interface Payload {
   email: string
   password: string
 }
+
+const initialValues:Payload = {email: '', password: ''}
+const URL = import.meta.env.VITE_BASE_URL
 
 const Signin = () => {
   const dispatch = useAppDispatch()
@@ -93,6 +93,7 @@ const Signin = () => {
         <p className='text-xs text-gray-700 font-bold mt-2'>Sign in to enjoy the wonderful world of Chatt!</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
           <InputField
+            element='input'
             name='email'
             type='email'
             label='Email'
@@ -101,6 +102,7 @@ const Signin = () => {
             error={errors.email}
           />
           <InputField
+            element='input'
             name='password'
             type='password'
             label='Password'

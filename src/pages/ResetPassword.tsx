@@ -60,6 +60,7 @@ const ResetPassword = () => {
         <p className='text-xs text-gray-700 font-bold mt-2'>Set a new password to keep your account secured.</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
           <InputField
+            element='input'
             name='password'
             type='password'
             label='Password'
@@ -69,6 +70,7 @@ const ResetPassword = () => {
             error={errors.password}
           />
           <InputField
+            element='input'
             name='confirm_password'
             type='password'
             label='Confirm Password'

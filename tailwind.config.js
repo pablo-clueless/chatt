@@ -3,7 +3,9 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
   theme: {
     extend: {
-      animation: {},
+      animation: {
+        shake: 'shake 500ms cubic-bezier(0.16, 1, 0.3, 1)',
+      },
       backgroundImage: {
         'not-found': 'url("./src/assets/images/404.png")'
       },
@@ -21,7 +23,15 @@ export default {
           900: '#1A4E1D',
         }
       },
-      keyframes: {},
+      keyframes: {
+        shake: {
+          '0%': { transform: 'translateX(-8px)'},
+          '25%': { transform: 'translateX(8px)'},
+          '50%': { transform: 'translateX(-8px)'},
+          '75%': { transform: 'translateX(8px)'},
+          '100%': { transform: 'translateX(0px)'},
+        }
+      },
     },
   },
   plugins: [],

@@ -9,15 +9,17 @@ import * as Yup from 'yup'
 import { Button, InputField, Spinner, Thumb } from 'components'
 import { usePageTitle } from 'hooks'
 
-const initialValues = {email: '', full_name: '', password: '', username: ''}
-const URL = import.meta.env.VITE_BASE_URL
-
 interface Payload {
+  age_consent: boolean
+  agreement: boolean
   email: string
   full_name: string
   password: string
   username: string
 }
+
+const initialValues:Payload = {age_consent: false, agreement: false, email: '', full_name: '', password: '', username: ''}
+const URL = import.meta.env.VITE_BASE_URL
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -29,7 +31,9 @@ const Signup = () => {
     password: Yup.string().
       matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/, 'Password must contain at least one uppercase, lowercase, number and special character!').
       required('Password is required!'),
-    username: Yup.string().required('Username is required!')
+    username: Yup.string().required('Username is required!'),
+    age_consent: Yup.boolean().required('You need to be 13 years or older as the time of signup!'),
+    agreement: Yup.boolean().required('Please accept the terms and conditions of this service!'),
   })
 
   const {isLoading, mutateAsync} = useMutation({
@@ -87,6 +91,7 @@ const Signup = () => {
         <p className='text-xs text-gray-700 font-bold mt-2'>Join the wonderful world of Chatt today!</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
           <InputField
+            element='input'
             name='full_name'
             type='text'
             label='Full Name'
@@ -95,6 +100,7 @@ const Signup = () => {
             error={errors.full_name}
           />
           <InputField
+            element='input'
             name='username'
             type='text'
             label='Username'
@@ -103,6 +109,7 @@ const Signup = () => {
             error={errors.username}
           />
           <InputField
+            element='input'
             name='email'
             type='email'
             label='Email'
@@ -111,12 +118,29 @@ const Signup = () => {
             error={errors.email}
           />
           <InputField
+            element='input'
             name='password'
             type='password'
             label='Password'
             onChange={handleChange}
             placeholder='********'
             error={errors.password}
+          />
+          <InputField
+            element='input'
+            name='age_consent'
+            type='checkbox'
+            label='I am 13 years or older'
+            onChange={handleChange}
+            error={errors.age_consent}
+          />
+          <InputField
+            element='input'
+            name='agreement'
+            type='checkbox'
+            label='I accept the terms and condition of the usage of this service.'
+            onChange={handleChange}
+            error={errors.agreement}
           />
           <Button
             label={isLoading ? <Spinner size='small' weight='thin' /> : 'Signin'}

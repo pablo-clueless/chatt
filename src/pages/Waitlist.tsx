@@ -48,6 +48,7 @@ const Waitlist = () => {
         <p className='text-xs text-gray-700 font-bold mt-2'>Chatt will be available soon. Join the waitlist to try the beta version.</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
           <InputField
+            element='input'
             name='email'
             type='email'
             label='Email'

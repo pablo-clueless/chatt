@@ -4,7 +4,9 @@ import { Suspense } from 'react'
 import { useConcurrentTransition } from 'hooks'
 import { Auth, Loader } from 'components'
 import {
+  About,
   Chat,
+  Contact,
   ForgotPassword,
   Home,
   NotFound,
@@ -24,6 +26,8 @@ const Router = () => {
     <Suspense fallback={<Loader />}>
       <Routes location={location}>
         <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
         <Route path='/signin' element={<Signin />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
