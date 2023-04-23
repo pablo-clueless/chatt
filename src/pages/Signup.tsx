@@ -9,17 +9,14 @@ import * as Yup from 'yup'
 import { Button, InputField, Spinner, Thumb } from 'components'
 import { usePageTitle } from 'hooks'
 
-const initialValues = {email: '', password: '', username: ''}
+const initialValues = {email: '', full_name: '', password: '', username: ''}
 const URL = import.meta.env.VITE_BASE_URL
 
 interface Payload {
-  provider: 'auth' | 'google' | 'github'
-  payload: {
-    email?: string
-    password?: string
-    usersname?: string
-    token?: string
-  }
+  email: string
+  full_name: string
+  password: string
+  username: string
 }
 
 const Signup = () => {
@@ -27,19 +24,22 @@ const Signup = () => {
   usePageTitle('Join millions of users around the world')
 
   const schema = Yup.object({
+    full_name: Yup.string().min(5, 'Name is too short').required('Full name is required!'),
     email: Yup.string().email('Please enter a valid email!').required('Email is required!'),
-    password: Yup.string().matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/).required('Password is required!'),
+    password: Yup.string().
+      matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/, 'Password must contain at least one uppercase, lowercase, number and special character!').
+      required('Password is required!'),
     username: Yup.string().required('Username is required!')
   })
 
   const {isLoading, mutateAsync} = useMutation({
-    mutationFn: ({provider, payload}:Payload) => {
-      return axios.post(`${URL}/auth/signup/${provider}`, payload)
+    mutationFn: (payload:Payload) => {
+      return axios.post(`${URL}/chatt/v1/auth/signup`, payload)
     },
-    mutationKey: ['signup auth google'],
+    mutationKey: ['signup auth'],
     onSuccess: ({data}) => {
-      console.log(data)
-      navigate('/verify')
+      const {message} = data
+      console.log(message)
     },
     onError: (error:AxiosError) => {
       const {message} = error
@@ -47,11 +47,26 @@ const Signup = () => {
     }
   })
 
-  const {errors, handleBlur, handleChange, handleSubmit} = useFormik({
+  const googleMutation = useMutation({
+    mutationFn: (code:string) => {
+      return axios.post(`${URL}/chatt/v1/auth/google`, {code})
+    },
+    mutationKey: ['signup google'],
+    onSuccess: ({data}) => {
+      console.log(data)
+      navigate('/')
+    },
+    onError: (error:AxiosError) => {
+      const {message} = error
+      console.log(message)
+    }
+  })
+
+  const {errors, handleChange, handleSubmit} = useFormik({
     initialValues,
     validationSchema: schema,
     onSubmit: async(data) => {
-      mutateAsync({provider: 'auth', payload: data})
+      mutateAsync(data)
     }
   })
 
@@ -59,7 +74,7 @@ const Signup = () => {
     flow: 'auth-code',
     onSuccess: async(response) => {
       const {code} = response
-      mutateAsync({provider: 'google', payload: {token: code}})
+      googleMutation.mutateAsync(code)
     },
     onError: (error) => console.log(error)
   })
@@ -72,11 +87,18 @@ const Signup = () => {
         <p className='text-xs text-gray-700 font-bold mt-2'>Join the wonderful world of Chatt today!</p>
         <form onSubmit={handleSubmit} className='w-full flex flex-col gap-4 mt-14'>
           <InputField
+            name='full_name'
+            type='text'
+            label='Full Name'
+            onChange={handleChange}
+            placeholder='John Doe'
+            error={errors.full_name}
+          />
+          <InputField
             name='username'
             type='text'
             label='Username'
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='johndoe'
             error={errors.username}
           />
@@ -85,7 +107,6 @@ const Signup = () => {
             type='email'
             label='Email'
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='someone@example.com'
             error={errors.email}
           />
@@ -94,7 +115,6 @@ const Signup = () => {
             type='password'
             label='Password'
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='********'
             error={errors.password}
           />

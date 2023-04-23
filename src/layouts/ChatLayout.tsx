@@ -24,7 +24,7 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
   useQuery({
     enabled: false,
     queryFn: () => {
-      return axios.get(`${URL}/get-chat-history/${id}`, {
+      return axios.get(`${URL}/chatt/v1/chatt/v1/get-chat-history/${id}`, {
         headers: { 'Authorization': `Bearer ${cookies.get('access_token')}`}
       })
     },
@@ -35,7 +35,7 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
   })
   
   useEffect(() => {
-    const peer = CONTACTS.find(contact => contact._id === peerId)
+    const peer = CONTACTS.find(contact => contact.id === peerId)
     if(peer) {
       setPeer(peer)
     }
@@ -69,9 +69,9 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
         <div className='w-full flex flex-col gap-1 py-2 overflow-y-scroll'>
           {CONTACTS.map((contact) => (
             <div
-              key={contact._id}
-              onClick={() => setPeerId(contact._id)}
-              className={`w-full flex items-center gap-4 px-4 py-2 rounded-sm cursor-pointer transition ${contact._id === peerId ? 'bg-gray-400' : 'hover:bg-gray-200'}`}>
+              key={contact.id}
+              onClick={() => setPeerId(contact.id)}
+              className={`w-full flex items-center gap-4 px-4 py-2 rounded-sm cursor-pointer transition ${contact.id === peerId ? 'bg-gray-400' : 'hover:bg-gray-200'}`}>
               <img src={contact.avatar} alt={contact.full_name} className='w-[40px] h-[40px] rounded-full object-cover' />
               <div className='flex flex-col'>
                 <p className='font-medium'>{contact.full_name}</p>

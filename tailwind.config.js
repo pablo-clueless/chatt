@@ -4,18 +4,21 @@ export default {
   theme: {
     extend: {
       animation: {},
-      backgroundImage: {},
+      backgroundImage: {
+        'not-found': 'url("./src/assets/images/404.png")'
+      },
       colors: {
         green: {
-          100: '#3CB043',
-          200: '#359C3B',
-          300: '#2E8834',
-          400: '#28752C',
-          500: '#216125',
-          600: '#1A4E1D',
-          700: '#143A16',
-          800: '#0D270E',
-          900: '#061307',
+          50: '#92D396',
+          100: '#7DCA81',
+          200: '#67C16C',
+          300: '#51B857',
+          400: '#3CB043',
+          500: '#359C3B',
+          600: '#2E8834',
+          700: '#28752C',
+          800: '#216125',
+          900: '#1A4E1D',
         }
       },
       keyframes: {},

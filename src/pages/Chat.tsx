@@ -1,9 +1,10 @@
 import { FiMic, FiMessageSquare, FiPhone, FiPlusCircle, FiVideo } from 'react-icons/fi'
 import { KeyboardEvent, useState } from 'react'
 import { IoArrowBack } from 'react-icons/io5'
+import io from 'socket.io-client'
 import { Peer } from 'peerjs'
 
-import { useAppContext, useAppSelector, usePageTitle, useSocketContext } from 'hooks'
+import { useAppContext, useAppSelector, usePageTitle } from 'hooks'
 import { CallModal } from 'components'
 import { ChatLayout } from 'layouts'
 import { User } from 'types'
@@ -13,7 +14,15 @@ interface CallType {
   type: 'none' | 'audio' | 'video'
 }
 
+const URL = import.meta.env.VITE_BASE_URL
+
+const StateMode:Record<string, string> = {
+  offline: 'text-red-500',
+  online: 'text-green-500',
+}
+
 const Chat = () => {
+  const [userState, setUserState] = useState<'online' | 'offline'>('offline')
   const [calls, setCalls] = useState<CallType>({stream: null, type: 'none'})
   const [availablePeer, setAvailablePeer] = useState<User | null>(null)
   const [openMenu, setOpenMenu] = useState<boolean>(false)
@@ -21,9 +30,12 @@ const Chat = () => {
   const { getUserMedia } = navigator.mediaDevices
   usePageTitle(`@${availablePeer?.username}`)
   const {chatBackground} = useAppContext()
-  const {socket} = useSocketContext()
 
   const peer = new Peer({host: ''})
+  const socket = io(URL)
+
+  socket.on('user-online', () => setUserState('online'))
+  socket.on('user-offline', () => setUserState('offline'))
 
   const addVideoStream = (video:HTMLVideoElement, stream:MediaStream) => {
     video.srcObject = stream
@@ -78,7 +90,7 @@ const Chat = () => {
   }
 
   return (
-    <ChatLayout id={user?._id} setPeer={setAvailablePeer}>
+    <ChatLayout id={user?.id} setPeer={setAvailablePeer}>
       {availablePeer ? (
         <>
         {calls.type !== 'none' && (
@@ -95,12 +107,12 @@ const Chat = () => {
                 <img src={availablePeer.avatar} alt={availablePeer.full_name} className='w-[30px] h-[30px] rounded-full object-cover' />
                 <div className='flex flex-col'>
                   <p className='text-lg font-semibold'>@{availablePeer.username}</p>
-                  <p className='text-xs font-bold'>offline</p>
+                  <p className={`text-xs font-bold ${StateMode[userState]}`}>{userState}</p>
                 </div>
               </div>
               <div className='flex items-center gap-4 text-xl'>
-                <FiPhone onClick={() => makeAudioCall(availablePeer._id)} className='cursor-pointer' />
-                <FiVideo onClick={() => makeVideoCall(availablePeer._id)} className='cursor-pointer' />
+                <FiPhone onClick={() => makeAudioCall(availablePeer.id)} className='cursor-pointer' />
+                <FiVideo onClick={() => makeVideoCall(availablePeer.id)} className='cursor-pointer' />
               </div>
             </div>
             <div className='w-full h-4/5'></div>

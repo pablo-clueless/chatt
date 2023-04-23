@@ -16,13 +16,17 @@ const ResetPassword = () => {
   usePageTitle('Reset Password')
 
   const schema = Yup.object({
-    confirm_password: Yup.string().matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/).required('Password is required!'),
-    password: Yup.string().matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/).required('Password is required!')
+    confirm_password: Yup.string().
+    matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/, 'Password must contain at least one uppercase, lowercase, number and special character!').
+    required('Password is required!'),
+    password: Yup.string().
+    matches(/^(?=.*[a-zA-Z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/, 'Password must contain at least one uppercase, lowercase, number and special character!').
+    required('Password is required!'),
   })
 
   const {isLoading, mutateAsync} = useMutation({
     mutationFn: (password:string) => {
-      return axios.post(`${URL}/auth/reset-password`, {password}, {
+      return axios.post(`${URL}/chatt/v1/auth/reset-password`, {password}, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
     },
@@ -36,7 +40,7 @@ const ResetPassword = () => {
     }
   })
 
-  const {errors, handleBlur, handleChange, handleSubmit, values} = useFormik({
+  const {errors, handleChange, handleSubmit, values} = useFormik({
     initialValues,
     validationSchema: schema,
     onSubmit: (data) => {
@@ -61,7 +65,6 @@ const ResetPassword = () => {
             label='Password'
             value={password}
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='********'
             error={errors.password}
           />
@@ -71,7 +74,6 @@ const ResetPassword = () => {
             label='Confirm Password'
             value={confirm_password}
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='********'
             error={errors.confirm_password}
           />

@@ -44,7 +44,7 @@ const InputField = ({name, type, error, icon, label, onBlur, onChange, onFocus, 
           </button>
         ): null}
       </div>
-      {error && <p className='text-[10px] text-red-500'>{error}</p>}
+      {error && <p className='w-[300px] text-[10px] text-red-500'>{error}</p>}
     </div>
   )
 }
