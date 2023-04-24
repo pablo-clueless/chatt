@@ -84,8 +84,8 @@ const Signup = () => {
   })
 
   return (
-    <main className='w-full flex flex-col items-center pt-20'>
-      <Thumb />
+    <main className='w-full flex flex-col items-center pt-20 select-none'>
+      <Thumb size='large' />
       <div className='flex flex-col items-center mt-10'>
         <p className='text-2xl font-medium'>Welcome!</p>
         <p className='text-xs text-gray-700 font-bold mt-2'>Join the wonderful world of Chatt today!</p>

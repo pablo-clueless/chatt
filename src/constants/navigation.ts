@@ -7,21 +7,17 @@ export const NAV_LINKS = [
 
 export const FOOTER_LINKS = [
     {title: 'overview', links: [
-        {label: 'about', target: '/about'},
-		{label: 'contact', target: '/contact'},
+        {label: 'chatt', target: '/about'},
 		{label: 'careers', target: '/'},
 		{label: 'developers', target: '/' },
     ]},
-    {title: 'contact', links: [
-		{label: 'support', target: '/'},
+    {title: 'support', links: [
+        {label: 'contact', target: '/contact'},
         {label: 'security', target: '/'},
-        {label: 'safety tips', target: '/'},
-        {label: 'impressium', target: '/'},
     ]},
     {title: 'resources', links: [
-        {label: 'privacy', target: '/'},
+        {label: 'privacy policy', target: '/'},
+        {label: 'terms & conditions', target: '/'},
         {label: 'cookies', target: '/'},
-        {label: 'legal', target: '/'},
-        {label: 'status', target: '/'},
     ]},
 ]

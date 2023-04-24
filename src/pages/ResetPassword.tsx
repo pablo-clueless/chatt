@@ -53,8 +53,8 @@ const ResetPassword = () => {
   const {confirm_password, password} = values
 
   return (
-    <main className='w-full flex flex-col items-center pt-20'>
-      <Thumb />
+    <main className='w-full flex flex-col items-center pt-20 select-none'>
+      <Thumb size='large' />
       <div className='flex flex-col items-center mt-10'>
         <p className='text-2xl font-medium'>Reset Password</p>
         <p className='text-xs text-gray-700 font-bold mt-2'>Set a new password to keep your account secured.</p>

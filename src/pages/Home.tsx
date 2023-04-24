@@ -10,17 +10,18 @@ const Home = () => {
   return (
     <>
     <Navbar />
-    <main className='w-full flex flex-col items-center px-5 md:px-52'>
+    <main className='w-full flex flex-col items-center px-5 md:px-52 select-none'>
       <div className='flex flex-col items-center my-10'>
         <div className='flex items-center gap-1 font-bold text-7xl md:text-9xl text-gray-700'>
           Chatt
           <FiMessageSquare className='fill-gray-700' />
         </div>
         <p className='text-sm font-semibold text-gray-300'>IMs, VoIP and Video calls</p>
+        <p className='text-lg text-center mt-5 mb-2'>Chatt will lauch soon. Join the waitlist to try the beta before it's publicly available.</p>
         <Button
           label='join waitlist'
           to='/join-waitlist'
-          className='bg-gray-700 text-white mt-10'
+          className='bg-gray-700 text-white mb-10'
         />
       </div>
       <div className='w-full flex flex-col md:flex-row items-center md:items-start gap-4 my-7'>
@@ -47,7 +48,7 @@ const Home = () => {
         </div>
         <div className='w-full flex flex-col text-center md:text-left'>
           <p className='text-2xl font-black'>Video Chat</p>
-          <p className='text-lg'>Make video calls with up to 500 users. Crisp video calls with low latency and works on 2G network. Say goodbye to quirky and delayed video call.</p>
+          <p className='text-lg'>Make video calls with up to 50 users. Crisp video calls with low latency and works on 2G network. Say goodbye to quirky and delayed video call.</p>
         </div>
       </div>
       <div className='w-full grid grid-cols-1 md:grid-cols-2 items-center bg-gray-500 rounded-lg my-7'>
