@@ -31,9 +31,9 @@ const Verify = () => {
   if(isLoading) return <Loader />
 
   return (
-    <div className='w-screen h-screen grid place-items-center'>
+    <div className='w-screen h-screen grid place-items-center select-none'>
       <div className='flex flex-col items-center'>
-        <Thumb />
+        <Thumb size='large' />
         <div className='flex flex-col items-center mt-20'>
           <FiCheckCircle className='text-green-500 text-5xl my-2' />
           <p className='text-lg font-medium'>Your account has been verified!</p>

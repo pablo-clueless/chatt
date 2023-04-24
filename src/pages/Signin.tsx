@@ -86,8 +86,8 @@ const Signin = () => {
   })
   
   return (
-    <main className='w-full flex flex-col items-center pt-20'>
-      <Thumb />
+    <main className='w-full flex flex-col items-center pt-20 select-none'>
+      <Thumb size='large' />
       <div className='flex flex-col items-center mt-10'>
         <p className='text-2xl font-medium'>Welcome Back!</p>
         <p className='text-xs text-gray-700 font-bold mt-2'>Sign in to enjoy the wonderful world of Chatt!</p>
@@ -109,6 +109,13 @@ const Signin = () => {
             onChange={handleChange}
             placeholder='********'
             error={errors.password}
+          />
+          <InputField
+            element='input'
+            name='remember_me'
+            type='checkbox'
+            label='Keep me logged in'
+            onChange={handleChange}
           />
           <Button
             label={isLoading ? <Spinner size='small' weight='thin' /> : 'Signin'}

@@ -41,8 +41,8 @@ const Waitlist = () => {
   })
 
   return (
-    <main className='w-full flex flex-col items-center pt-20'>
-      <Thumb />
+    <main className='w-full flex flex-col items-center pt-20 select-none'>
+      <Thumb size='large' />
       <div className='flex flex-col items-center mt-10'>
         <p className='text-2xl font-medium'>Join Waitlist</p>
         <p className='text-xs text-gray-700 font-bold mt-2'>Chatt will be available soon. Join the waitlist to try the beta version.</p>
