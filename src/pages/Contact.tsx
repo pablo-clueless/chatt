@@ -5,7 +5,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { Button, InputField, Spinner, Thumb } from 'components'
-import { usePageTitle } from 'hooks'
+import { usePageTitle, useScrollToTop } from 'hooks'
 
 interface Payload {
   email: string
@@ -19,6 +19,7 @@ const URL = import.meta.env.VITE_BASE_URL
 const Contact = () => {
   const navigate = useNavigate()
   usePageTitle('Contact Us')
+  useScrollToTop()
 
   const schema = Yup.object({
     email: Yup.string().email('Please enter a valid email!').required('Email is required!'),

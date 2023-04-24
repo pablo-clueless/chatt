@@ -2,10 +2,11 @@ import { FiMessageSquare } from 'react-icons/fi'
 
 import { call, chat, launch, video } from 'assets/images'
 import { Button, Footer, Navbar } from 'components'
-import { usePageTitle } from 'hooks'
+import { usePageTitle, useScrollToTop } from 'hooks'
 
 const Home = () => {
   usePageTitle('Connect with millions of users around the world')
+  useScrollToTop()
 
   return (
     <>
@@ -15,11 +16,11 @@ const Home = () => {
         <div className='w-full h-full grid place-items-center bg-black/60 bg-blend-multiply'>
           <div className='flex items-center gap-2 text-7xl md:text-9xl'>
             <div className='flex flex-col items-center'>
-              <div className='flex items-center gap-1 font-bold text-7xl md:text-9xl text-gray-400'>
+              <div className='flex items-center gap-1 font-black text-7xl md:text-9xl text-white'>
                 Chatt
-                <FiMessageSquare className='fill-gray-400' />
+                <FiMessageSquare className='fill-white' />
               </div>
-              <p className='text-sm font-semibold text-gray-300'>IMs, VoIP and Video calls</p>
+              <p className='text-sm font-semibold text-white'>IMs, VoIP and Video calls</p>
             </div>
           </div>
         </div>
@@ -34,12 +35,12 @@ const Home = () => {
           />
         </div>
         <div className='w-full flex flex-col md:flex-row items-center md:items-start gap-4 my-7'>
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col items-center'>
             <img src={chat} alt='messaging illustration' className='w-[250px]' />
           </div>
           <div className='w-full flex flex-col text-center md:text-left'>
             <p className='text-2xl font-black'>Instant Messaging</p>
-            <p className='text-lg'>Send and recieve instant messages Whether you're online or offline doesn't matter. What matters is that you'll always get notified of important messages.</p>
+            <p className='text-lg'>Send and recieve instant messages. Chatt retains the quality of images and video sent. Chatt also allows you send code spinnets.</p>
           </div>
         </div>
         <div className='w-full flex flex-col-reverse md:flex-row items-center md:items-start gap-4 my-7'>
@@ -47,12 +48,12 @@ const Home = () => {
             <p className='text-2xl font-black'>VoIP Calls</p>
             <p className='text-lg'>Spend less on phone bills by making VoIP calls to any one with an Internet enabled phone. Chatt has got you covered like that.</p>
           </div>
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col items-center'>
             <img src={call} alt='voip call illustration' className='w-[250px]' />
           </div>
         </div>
         <div className='w-full flex flex-col md:flex-row items-center md:items-start gap-4 my-7'>
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col items-center'>
             <img src={video} alt='video call illustration' className='w-[250px]' />
           </div>
           <div className='w-full flex flex-col text-center md:text-left'>
