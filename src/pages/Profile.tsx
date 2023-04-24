@@ -2,13 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import Cookies from 'universal-cookie'
 import axios, { AxiosError } from 'axios'
 
-import { useAppSelector } from 'hooks'
+import { useAppSelector, usePageTitle, useScrollToTop } from 'hooks'
 
 const URL = import.meta.env.VITE_BASE_URL
 
 const Profile = () => {
   const { user } = useAppSelector(store => store.user)
   const cookies = new Cookies()
+  usePageTitle('Profile')
+  useScrollToTop()
 
   useQuery({
     enabled: false,

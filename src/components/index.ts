@@ -1,7 +1,6 @@
 
 export { default as Auth } from './Auth'
 
-export { default as Alert } from './shared/Alert'
 export { default as Button } from './shared/Button'
 export { default as CallModal } from './shared/CallModal'
 export { default as ChatMenu } from './shared/ChatMenu'
@@ -12,3 +11,5 @@ export { default as Loader } from './shared/Loader'
 export { default as Navbar } from './shared/Navbar'
 export { default as Spinner } from './shared/Spinner'
 export { default as Thumb } from './shared/Thumb'
+export { default as Toast } from './shared/Toast'
+export { default as ToastContainer } from './shared/ToastContainer'

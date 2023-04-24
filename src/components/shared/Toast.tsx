@@ -1,4 +1,5 @@
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 
 interface Props {
   message: string
@@ -20,11 +21,21 @@ const ToastIcon:Record<string, JSX.Element> = {
   'warning': <FiAlertTriangle className='text-xl' />,
 }
 
+const transition = {default: {duration: 0.5, ease: [0, 0.71, 0.2, 1.01]}}
+const initial = {x: '-100%'}
+const animate = {x: 0}
+
 const Toast = ({message, onClose, type}:Props) => {
   return (
-    <div onClick={() => onClose()} className={`w-full flex items-center gap-2 ${ToastStyle[type]}`}>
-      {ToastIcon[type]} {message}
-    </div>
+    <motion.div
+      initial={initial}
+      animate={animate}
+      transition={transition}
+      onClick={() => onClose()}
+      className={`w-full flex items-center gap-2 p-2 border-r-2 cursor-pointer ${ToastStyle[type]}`}>
+      {ToastIcon[type]}
+      <span>{message}</span>
+    </motion.div>
   )
 }
 

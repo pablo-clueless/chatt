@@ -7,6 +7,7 @@ import {
   About,
   Chat,
   Contact,
+  Developers,
   ForgotPassword,
   Home,
   NotFound,
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/verify' element={<Verify />} />
         <Route path='/join-waitlist' element={<Waitlist />} />
+        <Route path='/docs' element={<Developers />} />
         <Route element={<Auth />}>
           <Route path='/chat' element={<Chat />} />
           <Route path='/profile' element={<Profile />} />

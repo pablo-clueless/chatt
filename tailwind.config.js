@@ -7,9 +7,10 @@ export default {
         shake: 'shake 500ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       backgroundImage: {
-        'about': 'url("./src/assets/images/about.jpg")',
-        'home': 'url("./src/assets/images/home.jpg")',
-        'not-found': 'url("./src/assets/images/404.png")',
+        'about': 'url("/images/about.jpg")',
+        'developers': 'url("/images/developers.jpg")',
+        'home': 'url("/images/home.jpg")',
+        'not-found': 'url("/images/404.png")',
       },
       colors: {
         green: {

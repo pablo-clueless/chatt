@@ -50,7 +50,7 @@ input[type='file']::-webkit-file-upload-button {
 	display: none;
 }
 
-a, button {
+button {
 	@apply active:scale-[0.98];
 }
 

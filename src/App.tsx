@@ -4,6 +4,7 @@ import { ErrorFallback } from 'components'
 import Router from './Router'
 
 const App = () => {
+
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

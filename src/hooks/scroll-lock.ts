@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 
 interface Props {
     isOpen: boolean
@@ -12,4 +12,10 @@ export const useScrollLock = ({isOpen}:Props) => {
         }
         return () => document.body.style.overflow = overflow
     },[isOpen])
+}
+
+export const useScrollToTop = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    },[])
 }

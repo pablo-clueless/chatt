@@ -11,12 +11,18 @@ import { User } from 'types'
 interface Props {
   children: ReactNode
   id: string | undefined
+  online: 'offline' | 'online'
+  peerId: string
   setPeer: Dispatch<SetStateAction<User | null>>
 }
 
 const URL = import.meta.env.VITE_BASE_URL
+const StateMode:Record<string, string> = {
+  offline: 'text-red-500',
+  online: 'text-green-500',
+}
 
-const ChatLayout = ({children, id, setPeer}:Props) => {
+const ChatLayout = ({children, id, online, setPeer}:Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [peerId, setPeerId] = useState<string>('')
   const cookies = new Cookies()
@@ -52,7 +58,7 @@ const ChatLayout = ({children, id, setPeer}:Props) => {
     <div className='w-full h-[92vh] flex items-center'>
       <div className='w-0 md:w-[300px] h-full flex flex-col gap-2 px-2 bg-gray-100 border-r'>
         <div className='w-full flex items-center justify-between py-4'>
-          <p></p>
+          <p className={`text-sm font-bold ${StateMode[online]}`}>{online}</p>
           <div className='flex items-center gap-4'>
             <button className=''>
               <FiEdit />

@@ -3,6 +3,7 @@ import { lazy } from 'react'
 const About = lazy(() => import('./About'))
 const Chat = lazy(() => import('./Chat'))
 const Contact = lazy(() => import('./Contact'))
+const Developers = lazy(() => import('./Developers'))
 const ForgotPassword = lazy(() => import('./ForgotPassword'))
 const Home = lazy(() => import('./Home'))
 const NotFound = lazy(() => import('./NotFound'))
@@ -18,6 +19,7 @@ export {
     About,
     Chat,
     Contact,
+    Developers,
     ForgotPassword,
     Home,
     NotFound,

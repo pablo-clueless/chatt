@@ -1,7 +1,7 @@
 import { FiMic, FiMessageSquare, FiPhone, FiPlusCircle, FiVideo } from 'react-icons/fi'
-import { KeyboardEvent, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import { IoArrowBack } from 'react-icons/io5'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { Peer } from 'peerjs'
 
 import { useAppContext, useAppSelector, usePageTitle } from 'hooks'
@@ -16,30 +16,40 @@ interface CallType {
 
 const URL = import.meta.env.VITE_BASE_URL
 
-const StateMode:Record<string, string> = {
-  offline: 'text-red-500',
-  online: 'text-green-500',
-}
-
 const Chat = () => {
-  const [userState, setUserState] = useState<'online' | 'offline'>('offline')
   const [calls, setCalls] = useState<CallType>({stream: null, type: 'none'})
+  const [userMode, setUserMode] = useState<'offline' | 'online'>('offline')
   const [availablePeer, setAvailablePeer] = useState<User | null>(null)
   const [openMenu, setOpenMenu] = useState<boolean>(false)
   const { user } = useAppSelector(store => store.user)
+  const [peerId, setPeerId] = useState<string>('')
   const { getUserMedia } = navigator.mediaDevices
   usePageTitle(`@${availablePeer?.username}`)
   const {chatBackground} = useAppContext()
 
-  const peer = new Peer({host: ''})
-  const socket = io(URL)
+  // const socket = io(URL)
+  const peer = new Peer(URL, {
+    host: '/',
+    path: '/chatt',
+    port: 443,
+    secure: true
+  })
 
-  socket.on('user-online', () => setUserState('online'))
-  socket.on('user-offline', () => setUserState('offline'))
+  peer.on('open', (id) => setPeerId(id))
+  peer.on('close', () => setPeerId(''))
+  // socket.on('user-online', (data) => {
+  //   console.log(data)
+  //   setUserMode('online')
+  // })
 
   const addVideoStream = (video:HTMLVideoElement, stream:MediaStream) => {
     video.srcObject = stream
     video.addEventListener('loadeddata', () => video.play())
+  }
+
+  const addAudioStream = (audio:HTMLAudioElement, stream:MediaStream) => {
+    audio.srcObject = stream
+    audio.addEventListener('loadeddata', () => audio.play())
   }
 
   const connectToUser = (id:string, stream:MediaStream) => {
@@ -54,9 +64,11 @@ const Chat = () => {
   const makeAudioCall = async(id:string) => {
     const stream = await getUserMedia({audio: true})
     const call = peer.call(id, stream)
+    const audio = document.createElement('audio')
     call.on('stream', (remoteStream) => {
       setCalls({stream: remoteStream, type: 'audio'})
-      console.log(remoteStream)
+      addAudioStream(audio, remoteStream)
+      connectToUser('', remoteStream)
     })
     call.on('close', () => {
       setCalls({stream: null, type: 'none'})
@@ -70,9 +82,7 @@ const Chat = () => {
     call.on('stream', (remoteStream) => {
       setCalls({stream: remoteStream, type: 'video'})
       addVideoStream(video, remoteStream)
-      socket.on('video-call', (id:string) => {
-        connectToUser(id, remoteStream)
-      })
+      connectToUser('', remoteStream)
     })
     call.on('close', () => {
       setCalls({stream: null, type: 'none'})
@@ -89,8 +99,14 @@ const Chat = () => {
     }
   }
 
+  useEffect(() => {
+    if(peerId) {
+      setUserMode('online')
+    }
+  },[peerId])
+
   return (
-    <ChatLayout id={user?.id} setPeer={setAvailablePeer}>
+    <ChatLayout id={user?.id} online={userMode} peerId={peerId} setPeer={setAvailablePeer}>
       {availablePeer ? (
         <>
         {calls.type !== 'none' && (
@@ -107,7 +123,7 @@ const Chat = () => {
                 <img src={availablePeer.avatar} alt={availablePeer.full_name} className='w-[30px] h-[30px] rounded-full object-cover' />
                 <div className='flex flex-col'>
                   <p className='text-lg font-semibold'>@{availablePeer.username}</p>
-                  <p className={`text-xs font-bold ${StateMode[userState]}`}>{userState}</p>
+                  <p className='text-xs font-bold'>{availablePeer.email}</p>
                 </div>
               </div>
               <div className='flex items-center gap-4 text-xl'>
