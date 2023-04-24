@@ -8,6 +8,7 @@ export default {
       },
       backgroundImage: {
         'about': 'url("./src/assets/images/about.jpg")',
+        'home': 'url("./src/assets/images/home.jpg")',
         'not-found': 'url("./src/assets/images/404.png")',
       },
       colors: {
