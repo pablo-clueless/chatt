@@ -41,7 +41,7 @@ const About = () => {
           </div>
         </div>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 items-center bg-gray-500 rounded-lg my-7'>
-          <img src={launch} alt='launch illustration' className='w-[300px] md:w-[500px] ' />
+          <img src={launch} alt='launch illustration' className='w-full md:w-[500px] ' />
           <div className='w-full flex flex-col items-center md:items-start text-center md:text-left'>
             <p className='text-3xl font-black'>Join the waitlist</p>
             <p className='text-xl font-medium text-white my-2'>
