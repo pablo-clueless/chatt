@@ -1,7 +1,7 @@
 import { FiMic, FiMessageSquare, FiPhone, FiPlusCircle, FiVideo } from 'react-icons/fi'
-import { KeyboardEvent, useEffect, useState } from 'react'
+import { KeyboardEvent, useState } from 'react'
 import { IoArrowBack } from 'react-icons/io5'
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
 import { Peer } from 'peerjs'
 
 import { useAppContext, useAppSelector, usePageTitle } from 'hooks'
@@ -27,7 +27,7 @@ const Chat = () => {
   usePageTitle(`@${availablePeer?.username}`)
   const {chatBackground} = useAppContext()
 
-  // const socket = io(URL)
+  const socket = io(URL)
   const peer = new Peer(URL, {
     host: '/',
     path: '/chatt',
@@ -37,10 +37,9 @@ const Chat = () => {
 
   peer.on('open', (id) => setPeerId(id))
   peer.on('close', () => setPeerId(''))
-  // socket.on('user-online', (data) => {
-  //   console.log(data)
-  //   setUserMode('online')
-  // })
+  socket.on('connect', () => {
+    setUserMode('online')
+  })
 
   const addVideoStream = (video:HTMLVideoElement, stream:MediaStream) => {
     video.srcObject = stream
@@ -98,12 +97,6 @@ const Chat = () => {
       e.currentTarget.value = ''
     }
   }
-
-  useEffect(() => {
-    if(peerId) {
-      setUserMode('online')
-    }
-  },[peerId])
 
   return (
     <ChatLayout id={user?.id} online={userMode} peerId={peerId} setPeer={setAvailablePeer}>
